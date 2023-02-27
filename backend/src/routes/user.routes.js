@@ -28,5 +28,4 @@ userRouter.post('/login',async(req,res)=>{
     res.status(200).send({message:'login successfully', token:`${user.name}:${Math.random()}:${email}`});
 })
 
-
 module.exports = userRouter;

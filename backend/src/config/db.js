@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 
 const url = process.env.url;
 const dbConnect =async()=>{
