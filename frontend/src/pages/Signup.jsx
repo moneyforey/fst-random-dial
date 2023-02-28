@@ -1,5 +1,5 @@
 import React from 'react';
-
+// import {Link} from 'react-router-dom'
 import {
     Flex,
     Box,
@@ -14,7 +14,7 @@ import {
     Heading,
     Text,
     useColorModeValue,
-    Link,
+    Link
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
@@ -90,7 +90,7 @@ import {
               </Stack>
               <Stack pt={6}>
                 <Text align={'center'}>
-                  Already a user? <Link color={'blue.400'}>Login</Link>
+                  Already a user? <Link color={'blue.400'} href='/login'>Login</Link>
                 </Text>
               </Stack>
             </Stack>
