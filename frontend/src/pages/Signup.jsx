@@ -18,10 +18,28 @@ import {
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-  
+
+  const initUser = {
+    name:'',
+    email:'',
+    password:''
+  }
+
   export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
-  
+    const [user,setUser] = useState(initUser);
+    const {name,email,password} = user;
+    const handlechange =(e)=>{
+          const {name,value} = e.target;
+          setUser({
+            ...user,
+            [name]:value
+          })
+    }
+
+    const handleClick =()=>{
+        console.log(user);
+    }
     return (
       <Flex
         minH={'100vh'}
@@ -47,7 +65,7 @@ import {
                 <Box>
                   <FormControl id="firstName" isRequired>
                     <FormLabel>First Name</FormLabel>
-                    <Input type="text" />
+                    <Input type="text" name='name' value={name} onChange={handlechange}/>
                   </FormControl>
                 </Box>
                 <Box>
@@ -59,12 +77,12 @@ import {
               </HStack>
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input type="email" name='email' value={email} onChange={handlechange}/>
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
-                  <Input type={showPassword ? 'text' : 'password'} />
+                  <Input type={showPassword ? 'text' : 'password'} name='password' value={password} onChange={handlechange}/>
                   <InputRightElement h={'full'}>
                     <Button
                       variant={'ghost'}
@@ -78,6 +96,7 @@ import {
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
+                  onClick={handleClick}
                   loadingText="Submitting"
                   size="lg"
                   bg={'blue.400'}

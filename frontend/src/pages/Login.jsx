@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
     Flex,
@@ -15,7 +15,23 @@ import {
     useColorModeValue,
   } from '@chakra-ui/react';
   
+  const initUser = {
+    email:'',
+    password:''
+  }
   export default function Login() {
+    const [user,setUser] = useState(initUser);
+    const {email,password} = user;
+    const handleChange =(e)=>{
+          const {name,value} = e.target;
+          setUser({
+            ...user,
+            [name]:value
+          })
+    }
+    const handleClick=()=>{
+        console.log(user);
+    }
     return (
       <Flex
         minH={'100vh'}
@@ -37,11 +53,11 @@ import {
             <Stack spacing={4}>
               <FormControl id="email">
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input type="email" name='email' value={email} onChange={handleChange} />
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Password</FormLabel>
-                <Input type="password" />
+                <Input type="password" name='password' value={password} onChange={handleChange} />
               </FormControl>
               <Stack spacing={10}>
                 <Stack
@@ -52,6 +68,7 @@ import {
                   <Link href='/forgot' color={'blue.400'}>Forgot password?</Link>
                 </Stack>
                 <Button
+                  onClick={handleClick}
                   bg={'blue.400'}
                   color={'white'}
                   _hover={{
