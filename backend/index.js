@@ -1,12 +1,13 @@
 const express = require('express')
 const dbConnect = require('./src/config/db');
 const userRouter = require('./src/routes/user.routes');
+const cors = require('cors');
 require('dotenv').config();
 
 const port = process.env.port  || 8080;
 
-const server = express()
-
+const server = express();
+server.use(cors());
 server.use(express.urlencoded({ extended: true }))
 
 server.use(express.json())

@@ -31,7 +31,7 @@ userRouter.post('/login',async(req,res)=>{
       if(user){
         const result = await bcrypt.compare(password,user.password);
         if(result){
-          const token = tokenCreator(user.email,user._id)
+          const token = tokenCreator(user.email,user._id,user.name)
           res.status(200).send({message:'login successfully', token});
         }else{
           return res.status(400).send('credential error')
