@@ -18,6 +18,8 @@ import {
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { usersignupApi } from '../store/user/user.actions';
 
   const initUser = {
     name:'',
@@ -27,8 +29,11 @@ import {
 
   export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
+    const dispatch = useDispatch();
+    const {message,token,isAuth} = useSelector((store)=>store.user);
     const [user,setUser] = useState(initUser);
     const {name,email,password} = user;
+    console.log(message,token,isAuth);
     const handlechange =(e)=>{
           const {name,value} = e.target;
           setUser({
@@ -39,7 +44,9 @@ import {
 
     const handleClick =()=>{
         console.log(user);
+        dispatch(usersignupApi(user));
     }
+
     return (
       <Flex
         minH={'100vh'}

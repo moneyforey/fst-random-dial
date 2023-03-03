@@ -17,6 +17,8 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { userlogoutApi } from '../store/user/user.actions';
 
 const NavLink = ({ children }) => (
   <Link
@@ -35,6 +37,11 @@ const NavLink = ({ children }) => (
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const {token,isAuth,message} = useSelector((store)=>store.user);
+  const handleLogout=()=>{
+      dispatch(userlogoutApi());
+  }
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -49,7 +56,8 @@ export default function Navbar() {
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
 
-              <Menu>
+              {
+                isAuth && <Menu>
                 <MenuButton
                   as={Button}
                   rounded={'full'}
@@ -77,9 +85,10 @@ export default function Navbar() {
                   <MenuDivider />
                   <MenuItem>Your Servers</MenuItem>
                   <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </MenuList>
               </Menu>
+              }
             </Stack>
           </Flex>
         </Flex>

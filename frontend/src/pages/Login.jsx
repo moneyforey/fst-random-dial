@@ -14,6 +14,8 @@ import {
     Text,
     useColorModeValue,
   } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { userloginApi } from '../store/user/user.actions';
   
   const initUser = {
     email:'',
@@ -21,6 +23,8 @@ import {
   }
   export default function Login() {
     const [user,setUser] = useState(initUser);
+    const dispatch = useDispatch();
+    const {token,isAuth,message}  = useSelector((store)=>store.user);
     const {email,password} = user;
     const handleChange =(e)=>{
           const {name,value} = e.target;
@@ -31,6 +35,7 @@ import {
     }
     const handleClick=()=>{
         console.log(user);
+        dispatch(userloginApi(user));
     }
     return (
       <Flex
