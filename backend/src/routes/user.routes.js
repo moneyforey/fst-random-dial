@@ -9,19 +9,20 @@ const userRouter = Router();
 console.log(saltRound);
 userRouter.get('/users',async(req,res)=>{
      const users = await User.find();
-     res.status(200).send(users);
+     res.send(200,users);
 })
 
 userRouter.post('/register',async(req,res)=>{
     const {name,email,password} = req.body;
     const user = await User.findOne({email});
     if(user){
-        return res.status(409).send(`${email} already registerd`);
+        return res.send(400,`${email} already registerd`);
     }
-    const newUser = new User({name,email,password})
+    
+    const newUser = new User({name,email,password});
     newUser.password = await bcrypt.hash(password, 10)
     await newUser.save();
-    res.status(200).send(`${email} is registerded successfully`);
+    res.send(200,`${email} is registerded successfully`);
 });
 
 userRouter.post('/login',async(req,res)=>{
@@ -32,15 +33,15 @@ userRouter.post('/login',async(req,res)=>{
         const result = await bcrypt.compare(password,user.password);
         if(result){
           const token = tokenCreator(user.email,user._id,user.name)
-          res.status(200).send({message:'login successfully', token});
+          res.send(200,{message:'login successfully', token,name:`${user.name}`});
         }else{
-          return res.status(400).send('credential error')
+          return res.send(400,'credential error')
         }
       }else{
-        return res.status(400).send(`${email} is not registerded with us`)
+        return res.send(400,`${email} is not registerded with us`)
       } 
     }else{
-        return res.status(400).send('provide the crediantial')
+        return res.send(400,'provide the crediantial')
     }
     
 })
