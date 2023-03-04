@@ -38,7 +38,7 @@ export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
-  const {token,isAuth,message} = useSelector((store)=>store.user);
+  const {token,isAuth,message,userName} = useSelector((store)=>store.user);
   const handleLogout=()=>{
       dispatch(userlogoutApi());
   }
@@ -50,14 +50,12 @@ export default function Navbar() {
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
-               <Link to='/login'>Login</Link>
-               <Link to='/signup'>Signup</Link>
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
 
               {
-                isAuth && <Menu>
+                isAuth ? <Menu>
                 <MenuButton
                   as={Button}
                   rounded={'full'}
@@ -79,7 +77,7 @@ export default function Navbar() {
                   </Center>
                   <br />
                   <Center>
-                    <p>Username</p>
+                    <p>{userName}</p>
                   </Center>
                   <br />
                   <MenuDivider />
@@ -87,7 +85,7 @@ export default function Navbar() {
                   <MenuItem>Account Settings</MenuItem>
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </MenuList>
-              </Menu>
+              </Menu>: <Link to='/login'>Login</Link>
               }
             </Stack>
           </Flex>

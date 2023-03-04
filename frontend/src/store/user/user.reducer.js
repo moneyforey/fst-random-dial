@@ -3,6 +3,7 @@ const token = localStorage.getItem('token') || null;
 
 const initState ={
     message:'',
+    userName:'',
     token: token,
     isAuth:false,
 }
@@ -16,10 +17,11 @@ const userReducer = (state=initState,{type,payload})=>{
             }
         }
         case user_login:{
-            localStorage.setItem('token',payload);
+            localStorage.setItem('token',payload.token);
             return{
                 ...state,
                 message:'login successfully',
+                userName:payload.name,
                 token:payload,
                 isAuth:true
             }

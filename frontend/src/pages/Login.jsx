@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     Flex,
@@ -16,6 +16,7 @@ import {
   } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userloginApi } from '../store/user/user.actions';
+import { useNavigate } from 'react-router-dom';
   
   const initUser = {
     email:'',
@@ -24,6 +25,7 @@ import { userloginApi } from '../store/user/user.actions';
   export default function Login() {
     const [user,setUser] = useState(initUser);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {token,isAuth,message}  = useSelector((store)=>store.user);
     const {email,password} = user;
     const handleChange =(e)=>{
@@ -37,6 +39,13 @@ import { userloginApi } from '../store/user/user.actions';
         console.log(user);
         dispatch(userloginApi(user));
     }
+
+    useEffect(()=>{
+        if(isAuth){
+            navigate('/');
+        }
+    },[isAuth])
+
     return (
       <Flex
         minH={'100vh'}
@@ -81,6 +90,11 @@ import { userloginApi } from '../store/user/user.actions';
                   }}>
                   Sign in
                 </Button>
+              </Stack>
+              <Stack pt={6}>
+                <Text align={'center'}>
+                  If new user? <Link color={'blue.400'} href='/signup'>Sign up</Link>
+                </Text>
               </Stack>
             </Stack>
           </Box>

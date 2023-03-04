@@ -15,7 +15,7 @@ export const userloginApi =(userdata)=>async(dispatch)=>{
        console.log(userdata);
        try{
            let res = await axios.post(`http://localhost:8080/login`,userdata);
-           dispatch({type:user_login,payload:res.data.token});
+           dispatch({type:user_login,payload:res.data});
        }catch(err){
         console.log(err);
        }
